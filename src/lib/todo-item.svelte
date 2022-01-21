@@ -1,3 +1,9 @@
+<script lang="ts">
+    export let todo: Todo
+    let done = todo.done
+
+</script>
+
 <style>
     .todo {
         display: grid;
@@ -66,7 +72,6 @@
         opacity: 1;
     }
 
-    /* TODO: Uncomment when the API endpoints are available
     .done {
         transform: none;
         opacity: .4;
@@ -76,21 +81,21 @@
     .done .toggle {
         background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='check' class='svg-inline--fa fa-check fa-w-16' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='currentColor' d='M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z'%3E%3C/path%3E%3C/svg%3E");
         opacity: .6;
-    } */
+    }
 </style>
 
-<div class="todo">
-    <form action="" method="">
-        <input type="hidden" name="done" value="" />
-        <button aria-label="Mark done/not done" class="toggle"></button>
+<div class="todo" class:done>
+    <form action="/todos/{todo.uid}.json?_method=patch" method="post">
+        <input type="hidden" name="done" value="{todo.done ? '' : 'true'}" />
+        <button aria-label="Mark todo as {todo.done ? 'not done' : 'done'}" class="toggle"></button>
     </form>
 
-    <form action="" method="" class="text">
-        <input type="text" />
-        <button aria-label="Savbe todo" class="save"></button>
+    <form action="/todos/{todo.uid}.json?_method=patch" method="post" class="text">
+        <input type="text" name="text" value="{todo.text}"/>
+        <button aria-label="Save todo" class="save"></button>
     </form>
 
-    <form action="" method="">
+    <form action="/todos/{todo.uid}.json?_method=delete" method="post">
         <button aria-label="Delete todo" class="delete"></button>
     </form>
 </div>

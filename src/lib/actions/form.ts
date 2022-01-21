@@ -26,7 +26,7 @@ export const enhance = (form: HTMLFormElement, {
     }
     
     form.addEventListener('submit', handleSubmit)
-
+    
     return {
         destroy() {
             form.removeEventListener('submit', handleSubmit)

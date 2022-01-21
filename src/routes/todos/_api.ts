@@ -1,38 +1,48 @@
 import type { RequestEvent } from '@sveltejs/kit'
+import PrismaClient from '$lib/prisma'
 
-// TODO: Persist in database
-let todos: Todo[] = []
+const prisma = new PrismaClient()
 
-export const api = ({ params, request, url }: RequestEvent, data?: Record<string, unknown>) => {
+export const api = async ({ params, request, url }: RequestEvent, data?: Record<string, unknown>) => {
     let status = 500
     let body = {}
 
-    console.log('METHOD: ', request.method)
-    console.log('URL _method: ', url.searchParams.get('_method'))
+    // console.log('METHOD: ', request.method)
+    // console.log('URL _method: ', url.searchParams.get('_method'))
 
     switch(request.method.toUpperCase()) {
         case 'GET':
             status = 200
-            body = todos
+            body = await prisma.todo.findMany()
             break;
         case 'POST':
-            todos.push(data as Todo)
-            body = data
+            body = await prisma.todo.create({
+                data: {
+                    created_at: data.created_at as Date,
+                    done: data.done as boolean,
+                    text: data.text as string
+                }
+            })
             status = 201
             break;
         case 'DELETE':
-            todos = todos.filter(todo => todo.uid !== params.uid)
+            body = await prisma.todo.delete({
+                where: {
+                    uid: params.uid
+                }
+            })
             status = 200
             break;
         case 'PATCH':
-            todos = todos.map(todo => {
-                if (todo.uid === params.uid) {
-                    if (data.text) todo.text = data.text as string
-                    else todo.done = data.done as boolean
+            body = await prisma.todo.update({
+                where: {
+                    uid: params.uid
+                },
+                data: {
+                    done: data.done as boolean,
+                    text: data.text as string
                 }
-                return todo
             })
-            body = todos.find(todo => todo.uid === params.uid)
             status = 200
             break;
         default:

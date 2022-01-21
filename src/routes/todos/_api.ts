@@ -27,7 +27,8 @@ export const api = ({ params, request, url }: RequestEvent, data?: Record<string
         case 'PATCH':
             todos = todos.map(todo => {
                 if (todo.uid === params.uid) {
-                    todo.text = data.text as string
+                    if (data.text) todo.text = data.text as string
+                    else todo.done = data.done as boolean
                 }
                 return todo
             })

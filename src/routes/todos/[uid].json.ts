@@ -8,6 +8,7 @@ export const del: RequestHandler = (event: RequestEvent) => {
 export const patch: RequestHandler = async (event: RequestEvent) => {
     const data = await event.request.formData()
     return api(event, {
-        text: data.get('text').toString()
+        text: data.get('text'),
+        done: data.has('done') ? !!data.get('done') : undefined
     })
 }

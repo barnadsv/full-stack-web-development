@@ -5,6 +5,8 @@
 
 # For more details, please see https://www.gitpod.io/docs/references/gitpod-yml
 
+image: gitpod/workspace-postgres
+
 tasks:
   - init: npm install && npm run build
     command: |
@@ -14,14 +16,16 @@ tasks:
 ports:
   - port: 3000
     onOpen: open-browser
+  - port: 5432
+    onOpen: ignore
 
 vscode:
   extensions:
     - dbaeumer.vscode-eslint
     - svelte.svelte-vscode
   
-# github:
-#   prebuilds:
-#     master: true
-#     branches: true
-#     pullRequests: true
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true

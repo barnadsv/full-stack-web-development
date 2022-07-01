@@ -1,3 +1,9 @@
+# Full Stack Web Development in the Cloud Course
+
+## https://www.freecodecamp.org/news/become-a-full-stack-developer-with-svelte/
+
+## https://www.youtube.com/watch?v=OUzaUJ3gEug
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
